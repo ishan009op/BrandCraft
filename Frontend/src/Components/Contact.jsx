@@ -12,14 +12,17 @@ const Contact = () => {
             Let's discuss how BrandCraft can help grow your business
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <a
+  href="https://mail.google.com/mail/?view=cm&fs=1&to=ishanzcreativity@gmail.com"
+  target="_blank"
+  rel="noopener noreferrer"
+  className="bg-slate-900 text-white px-8 py-4 rounded-lg text-lg font-semibold hover:bg-slate-800 transition shadow-lg"
+>
+  Email Us
+</a>
+
             <a 
-              href="mailto:hello@brandcraft.com" 
-              className="bg-slate-900 text-white px-8 py-4 rounded-lg text-lg font-semibold hover:bg-slate-800 transition shadow-lg"
-            >
-              Email Us
-            </a>
-            <a 
-              href="tel:+919876543210" 
+              href="tel:+919592397086" 
               className="bg-white text-slate-900 px-8 py-4 rounded-lg text-lg font-semibold hover:bg-slate-100 transition shadow-lg"
             >
               Call Now
