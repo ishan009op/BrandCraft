@@ -1,0 +1,5 @@
+node_modules/        # Dependency folder (reinstallable via npm/yarn)
+dist/                # Build output
+build/               # Alternative build output
+npm-debug.log*       # Error logs
+.env                 # Local secrets (CRITICAL)
