@@ -1,9 +1,11 @@
-import React,{useState} from 'react'
-import { Palette,MessageSquare,TrendingUp,Target,Users,Briefcase,ArrowRight } from 'lucide-react';
-const Services = () => {
-const [activeService, setActiveService] = useState(null);
+import React, { useState } from "react";
+import { motion } from "framer-motion";
+import { Palette, MessageSquare, TrendingUp, Target, Users, Briefcase, CheckCircle, ArrowRight } from "lucide-react";
 
-const services = [
+const Services = () => {
+  const [activeService, setActiveService] = useState(null);
+
+  const services = [
     {
       id: 1,
       icon: <Palette className="w-8 h-8" />,
@@ -17,9 +19,9 @@ const services = [
         "Menu Card Design (Restaurant / Cafe / Hotel)",
         "Banner, Standee & Hoarding Design",
         "Business Card & Stationery Design",
-        "Brand Identity Design (Logo, Color Palette, Fonts)"
+        "Brand Identity Design (Logo, Color Palette, Fonts)",
       ],
-      bestFor: "Shops, startups, restaurants, manufacturers, service businesses"
+      bestFor: "Shops, startups, restaurants, manufacturers, service businesses",
     },
     {
       id: 2,
@@ -31,9 +33,9 @@ const services = [
         "Marketing Captions & Copywriting",
         "Promotional Visual Content",
         "Reels / Post Content Planning",
-        "Brand Messaging & Tone Setup"
+        "Brand Messaging & Tone Setup",
       ],
-      bestFor: "Businesses looking to strengthen their brand voice"
+      bestFor: "Businesses looking to strengthen their brand voice",
     },
     {
       id: 3,
@@ -45,9 +47,9 @@ const services = [
         "Monthly Content Calendar",
         "Post Scheduling & Publishing",
         "Audience Engagement (Comments / DM strategy)",
-        "Performance Tracking & Reporting"
+        "Performance Tracking & Reporting",
       ],
-      bestFor: "Busy entrepreneurs who need consistent online presence"
+      bestFor: "Busy entrepreneurs who need consistent online presence",
     },
     {
       id: 4,
@@ -59,9 +61,9 @@ const services = [
         "Google Ads (Search / Display – Basic)",
         "Campaign Strategy & Setup",
         "Creative Ad Design & Copy",
-        "Budget Planning & Performance Review"
+        "Budget Planning & Performance Review",
       ],
-      bestFor: "Businesses ready to scale with targeted advertising"
+      bestFor: "Businesses ready to scale with targeted advertising",
     },
     {
       id: 5,
@@ -73,9 +75,9 @@ const services = [
         "ATL Campaign Planning",
         "Shop Branding & Visibility Activities",
         "Market Research & Field Execution",
-        "Promotional Strategy & Reporting"
+        "Promotional Strategy & Reporting",
       ],
-      bestFor: "Brands needing physical market presence and activation"
+      bestFor: "Brands needing physical market presence and activation",
     },
     {
       id: 6,
@@ -87,72 +89,99 @@ const services = [
         "Campaign Planning & Execution",
         "Brand Communication Management",
         "Monthly Performance Review",
-        "Long-term Growth Strategy"
+        "Long-term Growth Strategy",
       ],
-      bestFor: "Growing businesses needing a dedicated marketing partner"
-    }
+      bestFor: "Growing businesses needing a dedicated marketing partner",
+    },
   ];
 
   return (
-  <>
-  
- <section id="services" className="py-20 bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl font-bold text-slate-900 mb-4">
-              What We Do at BrandCraft
-            </h2>
-            <p className="text-xl text-slate-600">
-              We combine creativity, strategy, and execution to build strong brands
-            </p>
-          </div>
+    <section id="services" className="py-24 bg-slate-950">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="text-center mb-20">
+          <h2 className="text-4xl font-bold text-white mb-4">What We Do at BrandCraft</h2>
+          <p className="text-xl text-slate-300 max-w-2xl mx-auto">
+            Creativity + Strategy + Execution — building premium brands with measurable impact.
+          </p>
+        </div>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {services.map((service) => (
-              <div 
-                key={service.id}
-                className="bg-slate-50 rounded-xl p-6 border-2 border-slate-200 hover:border-amber-500 transition cursor-pointer shadow-sm hover:shadow-lg"
-                onClick={() => setActiveService(activeService === service.id ? null : service.id)}
-              >
-                <div className="text-amber-500 mb-4">
-                  {service.icon}
-                </div>
-                <h3 className="text-xl font-bold text-slate-900 mb-3">
-                  {service.title}
-                </h3>
-                <p className="text-slate-600 mb-4">
-                  {service.tagline}
-                </p>
-                <button className="text-amber-500 font-semibold flex items-center hover:text-amber-600">
-                  {activeService === service.id ? 'Hide Details' : 'View Details'}
-                  <ArrowRight className="ml-2 w-4 h-4" />
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-10">
+          {services.map((service) => (
+            <motion.div
+              key={service.id}
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.8, delay: service.id * 0.1 }}
+              whileHover={{ scale: 1.03 }}
+              className="relative bg-[#0F172A]/80 backdrop-blur-md border border-slate-800 rounded-3xl p-6 shadow-2xl cursor-pointer overflow-hidden group"
+              onClick={() => setActiveService(activeService === service.id ? null : service.id)}
+            >
+              {/* Floating Animated Shapes */}
+              <motion.div
+                className="absolute top-0 left-0 w-32 h-32 bg-gradient-to-tr from-amber-400/30 to-green-400/30 rounded-full blur-2xl opacity-60 pointer-events-none"
+                animate={{ x: [0, 20, 0], y: [0, 10, 0] }}
+                transition={{ repeat: Infinity, duration: 12, ease: "easeInOut" }}
+              />
+              <motion.div
+                className="absolute bottom-0 right-0 w-40 h-40 bg-gradient-to-tr from-cyan-400/30 to-indigo-400/30 rounded-full blur-2xl opacity-50 pointer-events-none"
+                animate={{ x: [0, -20, 0], y: [0, -10, 0] }}
+                transition={{ repeat: Infinity, duration: 14, ease: "easeInOut" }}
+              />
+
+              {/* Content */}
+              <div className="relative z-10">
+                <div className="text-amber-400 mb-4">{service.icon}</div>
+                <h3 className="text-xl font-bold text-white mb-2">{service.title}</h3>
+                <p className="text-slate-300 mb-4">{service.tagline}</p>
+                <button className="text-amber-400 font-semibold flex items-center gap-2 group-hover:text-amber-500 transition">
+                  {activeService === service.id ? "Hide Details" : "View Details"}
+                  <ArrowRight className="w-4 h-4" />
                 </button>
 
+                {/* Expanded content */}
                 {activeService === service.id && (
-                  <div className="mt-6 pt-6 border-t border-slate-300">
+                  <motion.div
+                    initial={{ opacity: 0, height: 0 }}
+                    animate={{ opacity: 1, height: "auto" }}
+                    exit={{ opacity: 0, height: 0 }}
+                    transition={{ duration: 0.5 }}
+                    className="mt-6 pt-4 border-t border-slate-700"
+                  >
                     <ul className="space-y-2 mb-4">
                       {service.items.map((item, idx) => (
-                        <li key={idx} className="flex items-start text-sm text-slate-700">
-                          <CheckCircle className="w-4 h-4 text-green-600 mr-2 flex-shrink-0 mt-0.5" />
+                        <li key={idx} className="flex items-start text-sm text-slate-300">
+                          <CheckCircle className="w-4 h-4 text-emerald-400 mr-2 flex-shrink-0 mt-0.5" />
                           {item}
                         </li>
                       ))}
                     </ul>
-                    <div className="bg-amber-50 border border-amber-200 rounded-lg p-3">
-                      <p className="text-sm text-slate-700">
-                        <span className="font-semibold">Best for:</span> {service.bestFor}
+                    <div className="bg-slate-800 border border-amber-500 rounded-lg p-3">
+                      <p className="text-sm text-slate-300">
+                        <span className="font-semibold text-amber-400">Best for:</span> {service.bestFor}
                       </p>
                     </div>
-                  </div>
+                  </motion.div>
                 )}
               </div>
-            ))}
-          </div>
+
+              {/* Gradient border animation */}
+              <motion.div
+                className="absolute inset-0 rounded-3xl border-2 border-gradient-to-r from-amber-400 via-green-400 to-cyan-400 pointer-events-none"
+                style={{
+                  borderImageSlice: 1,
+                  borderWidth: "2px",
+                  borderImageSource: "linear-gradient(45deg, #FBBF24, #22D3EE, #10B981)",
+                }}
+                animate={{ rotate: [0, 360] }}
+                transition={{ repeat: Infinity, duration: 25, ease: "linear" }}
+              />
+            </motion.div>
+          ))}
         </div>
-      </section>
+      </div>
+    </section>
+  );
+};
 
-  </>
-  )
-}
-
-export default Services
+export default Services;
