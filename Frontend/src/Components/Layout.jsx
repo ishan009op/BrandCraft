@@ -15,8 +15,7 @@ import Footer from './Footer';
 
   return (
     <div className="min-h-screen bg-slate-50">
-      {/* Navigation */}
-     <Header/>
+    
 
       {/* Hero Section */}
       <Home/>
@@ -29,8 +28,7 @@ import Footer from './Footer';
       {/* CTA Section */}
      <Contact/>
 
-      {/* Footer */}
-     <Footer/>
+    
     </div>
   );
 }

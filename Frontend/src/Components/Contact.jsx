@@ -1,11 +1,27 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import axios from "axios";
+import { QRCodeCanvas } from "qrcode.react";
+
+// Set your admin email here
+const ADMIN_EMAIL = "brandcraftduo@gmail.com";
 
 const Contact = () => {
   const [formData, setFormData] = useState({ name: "", email: "" });
   const [loading, setLoading] = useState(false);
-  const [message, setMessage] = useState({ text: "", type: "" }); // type: "success" | "error"
+  const [message, setMessage] = useState({ text: "", type: "" });
+  const [token, setToken] = useState("");
+  const [email, setEmail] = useState(""); // logged-in email
+
+  // On mount, load token and email from localStorage
+  useEffect(() => {
+    const savedToken = localStorage.getItem("adminToken");
+    const savedEmail = localStorage.getItem("adminEmail");
+    if (savedToken && savedEmail) {
+      setToken(savedToken);
+      setEmail(savedEmail);
+    }
+  }, []);
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -23,12 +39,26 @@ const Contact = () => {
       setLoading(true);
       setMessage({ text: "", type: "" });
 
-      await axios.post("https://brandcraft-6yvg.onrender.com/api/user", {
-        name: formData.name,
-        email: formData.email,
-      });
+      const res = await axios.post(
+        "https://brandcraft-6yvg.onrender.com/api/user",
+        {
+          name: formData.name,
+          email: formData.email,
+        }
+      );
 
-      setMessage({ text: "Thanks! We’ll contact you shortly.", type: "success" });
+      // Only set token if the logged-in email is the admin email
+      if (res.data.token && formData.email === ADMIN_EMAIL) {
+        localStorage.setItem("adminToken", res.data.token);
+        localStorage.setItem("adminEmail", formData.email);
+        setToken(res.data.token);
+        setEmail(formData.email);
+      }
+
+      setMessage({
+        text: "Thanks! We’ll contact you shortly.",
+        type: "success",
+      });
       setFormData({ name: "", email: "" });
     } catch (err) {
       console.error(err);
@@ -38,30 +68,11 @@ const Contact = () => {
     }
   };
 
+  // ✅ Only show QR if token exists AND email matches admin email
+  const showAdminQR = token && email === ADMIN_EMAIL;
+
   return (
     <section className="relative py-24 bg-slate-900 overflow-hidden">
-      {/* Solid Background Shapes */}
-      <motion.div
-        className="absolute top-10 left-[-50px] w-28 h-28 bg-amber-500 rounded-xl"
-        animate={{ y: [0, 40, 0], rotate: [0, 15, 0] }}
-        transition={{ repeat: Infinity, duration: 12, ease: "easeInOut" }}
-      />
-      <motion.div
-        className="absolute bottom-20 right-[-60px] w-32 h-32 bg-green-500 rounded-2xl"
-        animate={{ y: [0, -50, 0], rotate: [0, -15, 0] }}
-        transition={{ repeat: Infinity, duration: 14, ease: "easeInOut" }}
-      />
-      <motion.div
-        className="absolute top-[40%] right-10 w-20 h-20 bg-cyan-500 rounded-full"
-        animate={{ x: [0, 30, 0], y: [0, -30, 0], rotate: [0, 180, 0] }}
-        transition={{ repeat: Infinity, duration: 16, ease: "easeInOut" }}
-      />
-      <motion.div
-        className="absolute bottom-[30%] left-20 w-24 h-24 bg-indigo-500 rounded-lg"
-        animate={{ x: [0, -40, 0], y: [0, 30, 0], rotate: [0, -180, 0] }}
-        transition={{ repeat: Infinity, duration: 18, ease: "easeInOut" }}
-      />
-
       <div className="relative max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center z-10">
         <motion.h2
           initial={{ opacity: 0, y: 20 }}
@@ -89,7 +100,6 @@ const Contact = () => {
           transition={{ duration: 0.8, delay: 0.2 }}
           className="relative bg-[#0F172A]/80 backdrop-blur-md rounded-3xl p-8 shadow-2xl max-w-md mx-auto mb-8 overflow-hidden"
         >
-          {/* Inline Message */}
           <AnimatePresence>
             {message.text && (
               <motion.div
@@ -140,26 +150,16 @@ const Contact = () => {
           </button>
         </motion.form>
 
-        {/* Quick Contact Buttons */}
-        <div className="flex flex-col sm:flex-row gap-4 justify-center z-10 relative">
-          <motion.a
-            href="https://mail.google.com/mail/?view=cm&fs=1&to=brandcraftduo@gmail.com"
-            target="_blank"
-            rel="noopener noreferrer"
-            whileHover={{ scale: 1.05 }}
-            className="bg-slate-900 text-white px-8 py-4 rounded-lg text-lg font-semibold hover:bg-slate-800 transition shadow-lg"
-          >
-            Email Us
-          </motion.a>
-
-          <motion.a
-            href="tel:+919592397086"
-            whileHover={{ scale: 1.05 }}
-            className="bg-white text-slate-900 px-8 py-4 rounded-lg text-lg font-semibold hover:bg-slate-100 transition shadow-lg"
-          >
-            Call Now
-          </motion.a>
-        </div>
+        {/* ✅ Admin QR */}
+        {showAdminQR && (
+          <div className="mb-8">
+            <h3 className="text-white font-semibold mb-2">Admin Access QR</h3>
+            <QRCodeCanvas value={token} size={180} level="H" />
+            <p className="text-sm text-slate-300 mt-2">
+              Scan this QR on a trusted device to access the admin panel.
+            </p>
+          </div>
+        )}
       </div>
     </section>
   );
