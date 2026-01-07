@@ -81,10 +81,10 @@ const Footer = () => {
             <h4 className="font-bold mb-4">Contact</h4>
             <div className="space-y-2 text-slate-400">
               <p className="flex items-center gap-2">
-                <Mail className="w-4 h-4 text-amber-400" /> hello@brandcraft.com
+                <Mail className="w-4 h-4 text-amber-400" /> brandcraftduo@gmail.com
               </p>
               <p className="flex items-center gap-2">
-                <Phone className="w-4 h-4 text-amber-400" /> +91 98765 43210
+                <Phone className="w-4 h-4 text-amber-400" /> +91 95923-97086
               </p>
             </div>
           </div>

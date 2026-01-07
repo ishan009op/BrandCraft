@@ -7,6 +7,7 @@ const AdminPanel = () => {
   const [users, setUsers] = useState([]);
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(true);
+  const [messages,setMEssages]=useState([])
 
   useEffect(() => {
     // 1️⃣ Read token & email from URL
@@ -20,7 +21,7 @@ const AdminPanel = () => {
       return;
     }
 
-    const fetchData = async () => {
+    const fetchUser = async () => {
       try {
         const res = await axios.get(
           "https://brandcraft-6yvg.onrender.com/api/user",
@@ -41,7 +42,22 @@ const AdminPanel = () => {
       }
     };
 
-    fetchData();
+    fetchUser();
+
+    const fetchMessage=async()=>{
+      const res= await axios.get('https://brandcraft-6yvg.onrender.com/api/message',{
+         headers: {
+              Authorization: `Bearer ${token}`,
+            },
+      })
+      const messagesArray = Array.isArray(res.data) ? res.data : res.data.message || [];
+    
+      setMEssages(messagesArray);
+      console.log(res.data.message);
+      
+    }
+    fetchMessage()
+    
   }, []);
 
   if (loading) return <p className="text-white">Loading...</p>;

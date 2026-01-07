@@ -166,7 +166,7 @@ const Services = () => {
               </div>
 
               {/* Gradient border animation */}
-              <motion.div
+              {/* <motion.div
                 className="absolute inset-0 rounded-3xl border-2 border-gradient-to-r from-amber-400 via-green-400 to-cyan-400 pointer-events-none"
                 style={{
                   borderImageSlice: 1,
@@ -175,7 +175,7 @@ const Services = () => {
                 }}
                 animate={{ rotate: [0, 360] }}
                 transition={{ repeat: Infinity, duration: 25, ease: "linear" }}
-              />
+              /> */}
             </motion.div>
           ))}
         </div>

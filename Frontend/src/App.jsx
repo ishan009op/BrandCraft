@@ -11,10 +11,11 @@ function App() {
 
   return (
    <>
-   
+   <div className='m-6'>
    <Header/>
    <Outlet/>
    <Footer/>
+   </div>
    </>
   )
 }
