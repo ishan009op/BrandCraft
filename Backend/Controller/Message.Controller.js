@@ -8,6 +8,6 @@ export const AddMessage=async(req,res)=>{
 }
 
 export const getMessage=async(req,res)=>{
-    const Message=await Message.find({})
-    res.json(Message)
+    const message=await Message.find({})
+    res.json(message)
 }
