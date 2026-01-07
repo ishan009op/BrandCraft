@@ -36,7 +36,7 @@ const Header = () => {
                 initial={{ x: -30, opacity: 0 }}
                 animate={{ x: 0, opacity: 1 }}
                 transition={{ duration: 0.5 }}
-                className="text-2xl font-bold cursor-pointer"
+                className="text-2xl text-slate-50 font-bold cursor-pointer"
               >
                 <span className="text-amber-500">Brand</span>Craft
               </motion.div>
