@@ -190,12 +190,15 @@ const Contact = () => {
 
         {/* Email & Call Buttons */}
 <div className="flex justify-center gap-4 mt-6">
-  <a
-    href="mailto:brandcraftduo@gmail.com"
-    className="px-6 py-3 bg-white rounded-full font-semibold hover:bg-gray-200 text-blue-950 transition"
-  >
-    Email Us
-  </a>
+<a
+  href="https://mail.google.com/mail/?view=cm&to=brandcraftduo@gmail.com&su=Inquiry%20from%20Website&body=Hi%20BrandCraft%2C%0A%0AI%20would%20like%20to%20discuss..."
+  target="_blank"
+  rel="noopener noreferrer"
+  className="px-6 py-3 bg-white rounded-full font-semibold hover:bg-gray-200 text-blue-950 transition"
+>
+  Email Us
+</a>
+
   <a
     href="tel:+911234567890" // replace with your phone number
     className="px-6 py-3 bg-amber-400 rounded-full font-semibold hover:bg-amber-500 text-white transition"
