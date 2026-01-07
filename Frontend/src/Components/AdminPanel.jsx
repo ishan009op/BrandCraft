@@ -53,7 +53,7 @@ const AdminPanel = () => {
       const messagesArray = Array.isArray(res.data) ? res.data : res.data.message || [];
     
       setMEssages(messagesArray);
-      console.log(res.data.message);
+      console.log(res.data);
       
     }
     fetchMessage()
