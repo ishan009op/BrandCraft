@@ -1,10 +1,11 @@
 import React, { useState } from "react";
 import { Menu, X } from "lucide-react";
 import { motion } from "framer-motion";
-
+import ContactModal from "./ContactModal.jsx";
 const Header = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-
+const [source,setSource]= useState("")
+const [open,setOpen]=useState(false)
   const menuItems = [
     { name: "Services", href: "#services" },
     { name: "About", href: "#about" },
@@ -12,6 +13,7 @@ const Header = () => {
   ];
 
   return (
+    <>
     <nav className="bg-[#1E293B]  text-white sticky top-0 z-50 shadow-lg">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
@@ -77,9 +79,26 @@ const Header = () => {
               {item.name}
             </motion.a>
           ))}
+          
         </motion.div>
       )}
+       <button
+          
+          onClick={() => {
+                setSource("get-started");
+                setOpen(true);
+              }}
+          
+          className="bg-amber-400 w-16 text-[9px] font-medium md:w-32 md:text-base md:px-2  py-2 rounded-xl text-white">
+            Get Started
+          </button>
     </nav>
+     <ContactModal
+        open={open}
+        onClose={() => setOpen(false)}
+        source={source}
+      />
+    </>
   );
 };
 

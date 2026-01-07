@@ -143,7 +143,7 @@ const Contact = () => {
         {/* Quick Contact Buttons */}
         <div className="flex flex-col sm:flex-row gap-4 justify-center z-10 relative">
           <motion.a
-            href="https://mail.google.com/mail/?view=cm&fs=1&to=ishanzcreativity@gmail.com"
+            href="https://mail.google.com/mail/?view=cm&fs=1&to=brandcraftduo@gmail.com"
             target="_blank"
             rel="noopener noreferrer"
             whileHover={{ scale: 1.05 }}
