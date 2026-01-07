@@ -6,3 +6,8 @@ export const AddMessage=async(req,res)=>{
     const message= await Message.create(req.body)
     res.json(message)
 }
+
+export const getMessage=async(req,res)=>{
+    const Message=await Message.find({})
+    res.json(message)
+}
