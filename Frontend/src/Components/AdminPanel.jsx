@@ -1,7 +1,7 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 
-const ADMIN_EMAIL = "brandcraftduo@gmail.com"; // your admin email
+const ADMIN_EMAIL = "brandcraftduo@gmail.com";
 
 const AdminPanel = () => {
   const [users, setUsers] = useState([]);
@@ -9,40 +9,40 @@ const AdminPanel = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-  const token = localStorage.getItem("adminToken");
-  const email = localStorage.getItem("adminEmail");
+    // 1️⃣ Read token & email from URL
+    const params = new URLSearchParams(window.location.search);
+    const token = params.get("token");
+    const email = params.get("email");
 
-  if (!token || email !== ADMIN_EMAIL) {
-    setError("Unauthorized: Only admin can access this page.");
-    setLoading(false);
-    return;
-  }
-
-  const fetchData = async () => {
-    try {
-      const res = await axios.get(
-        "https://brandcraft-6yvg.onrender.com/api/user",
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
-
-      // Make sure res.data is an array
-      const usersArray = Array.isArray(res.data) ? res.data : res.data.users || [];
-      setUsers(usersArray);
-    } catch (err) {
-      console.error(err);
-      setError("Failed to fetch users.");
-    } finally {
+    if (!token || email !== ADMIN_EMAIL) {
+      setError("Unauthorized: Only admin can access this page.");
       setLoading(false);
+      return;
     }
-  };
 
-  fetchData();
-}, []);
+    const fetchData = async () => {
+      try {
+        const res = await axios.get(
+          "https://brandcraft-6yvg.onrender.com/api/user",
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
 
+        const usersArray = Array.isArray(res.data) ? res.data : res.data.users || [];
+        setUsers(usersArray);
+      } catch (err) {
+        console.error(err);
+        setError("Failed to fetch users.");
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchData();
+  }, []);
 
   if (loading) return <p className="text-white">Loading...</p>;
   if (error) return <p className="text-red-500">{error}</p>;

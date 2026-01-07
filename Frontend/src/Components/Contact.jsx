@@ -11,9 +11,9 @@ const Contact = () => {
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState({ text: "", type: "" });
   const [token, setToken] = useState("");
-  const [email, setEmail] = useState(""); // logged-in email
+  const [email, setEmail] = useState("");
 
-  // On mount, load token and email from localStorage
+  // Load token and email from localStorage on mount
   useEffect(() => {
     const savedToken = localStorage.getItem("adminToken");
     const savedEmail = localStorage.getItem("adminEmail");
@@ -47,7 +47,7 @@ const Contact = () => {
         }
       );
 
-      // Only set token if the logged-in email is the admin email
+      // Only set token if the email is admin
       if (res.data.token && formData.email === ADMIN_EMAIL) {
         localStorage.setItem("adminToken", res.data.token);
         localStorage.setItem("adminEmail", formData.email);
@@ -68,8 +68,26 @@ const Contact = () => {
     }
   };
 
-  // ✅ Only show QR if token exists AND email matches admin email
-  const showAdminQR = token && email === ADMIN_EMAIL;
+  // QR value only if admin token & email exist
+  const qrValue =
+    token && email === ADMIN_EMAIL
+      ? `https://brand-craft-omega.vercel.app/admin/users?token=${token}&email=${email}`
+      : null;
+
+  // Function to download QR as PNG
+  const downloadQR = () => {
+    const canvas = document.getElementById("adminQR");
+    if (!canvas) return;
+    const pngUrl = canvas
+      .toDataURL("image/png")
+      .replace("image/png", "image/octet-stream");
+    const link = document.createElement("a");
+    link.href = pngUrl;
+    link.download = "adminQR.png";
+    link.click();
+  };
+
+  const showAdminQR = !!qrValue;
 
   return (
     <section className="relative py-24 bg-slate-900 overflow-hidden">
@@ -150,15 +168,24 @@ const Contact = () => {
           </button>
         </motion.form>
 
-        {/* ✅ Admin QR */}
+        {/* Admin QR */}
         {showAdminQR && (
-          <div className="mb-8">
-            <h3 className="text-white font-semibold mb-2">Admin Access QR</h3>
-            <QRCodeCanvas value={token} size={180} level="H" />
-            <p className="text-sm text-slate-300 mt-2">
-              Scan this QR on a trusted device to access the admin panel.
-            </p>
-          </div>
+          <>
+            <QRCodeCanvas
+              id="adminQR"
+              value={qrValue}
+              size={300}
+              level="H"
+              bgColor="#ffffff"
+              fgColor="#000000"
+            />
+            <button
+              onClick={downloadQR}
+              className="mt-4 px-6 py-2 bg-amber-400 rounded-full font-semibold hover:bg-amber-500 text-slate-900"
+            >
+              Download QR
+            </button>
+          </>
         )}
       </div>
     </section>
